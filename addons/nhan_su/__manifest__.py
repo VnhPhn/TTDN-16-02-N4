@@ -31,6 +31,8 @@
         'views/chuc_vu.xml',
         'views/lich_su_cong_tac.xml',
         'views/hop_dong.xml',
+        'views/cham_cong.xml',
+        'views/bang_luong.xml',
         'views/menu.xml',
         
     ],

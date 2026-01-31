@@ -9,22 +9,18 @@
                 <form string="Hợp đồng">
                     <sheet>
                         <group col="4" string="Thông tin hợp đồng">
-                            <field name="so_hd"/>
-                            <field name="loai_hop_dong"/>
-                            <field name="ngay_ky"/>
-                            <field name="ngay_het_han"/>
-                            <field name="trang_thai"/>
-                            <field name="nhan_vien_id"/>
-                        </group>
-                        <group col="4" string="Thông tin lương">
-                            <field name="luong_co_ban"/>
-                            <field name="phu_cap"/>
+                            <field name="so_hd" />
+                            <field name="loai_hop_dong" />
+                            <field name="ngay_ky" />
+                            <field name="ngay_het_han" />
+                            <field name="trang_thai" />
+                            <field name="nhan_vien_id" />
                         </group>
                         <group string="Mô tả">
-                            <field name="mo_ta" nolabel="1"/>
+                            <field name="mo_ta" nolabel="1" />
                         </group>
                         <group string="Ghi chú">
-                            <field name="ghi_chu" nolabel="1"/>
+                            <field name="ghi_chu" nolabel="1" />
                         </group>
                     </sheet>
                 </form>
@@ -36,13 +32,12 @@
             <field name="model">hop_dong</field>
             <field name="arch" type="xml">
                 <tree string="Hợp đồng">
-                    <field name="so_hd"/>
-                    <field name="nhan_vien_id"/>
-                    <field name="loai_hop_dong"/>
-                    <field name="ngay_ky"/>
-                    <field name="ngay_het_han"/>
-                    <field name="trang_thai"/>
-                    <field name="luong_co_ban"/>
+                    <field name="so_hd" />
+                    <field name="nhan_vien_id" />
+                    <field name="loai_hop_dong" />
+                    <field name="ngay_ky" />
+                    <field name="ngay_het_han" />
+                    <field name="trang_thai" />
                 </tree>
             </field>
         </record>
@@ -52,11 +47,14 @@
             <field name="model">hop_dong</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="so_hd"/>
-                    <field name="nhan_vien_id"/>
-                    <filter name="filter_hieu_luc" string="Có hiệu lực" domain="[('trang_thai','=','hieu_luc')]"/>
-                    <filter name="filter_het_han" string="Hết hạn" domain="[('trang_thai','=','het_han')]"/>
-                    <filter name="filter_cham_dut" string="Chấm dứt" domain="[('trang_thai','=','cham_dut')]"/>
+                    <field name="so_hd" />
+                    <field name="nhan_vien_id" />
+                    <filter name="filter_hieu_luc" string="Có hiệu lực"
+                        domain="[('trang_thai','=','hieu_luc')]" />
+                    <filter name="filter_het_han" string="Hết hạn"
+                        domain="[('trang_thai','=','het_han')]" />
+                    <filter name="filter_cham_dut" string="Chấm dứt"
+                        domain="[('trang_thai','=','cham_dut')]" />
                 </search>
             </field>
         </record>
@@ -65,7 +63,7 @@
             <field name="name">Hợp đồng</field>
             <field name="res_model">hop_dong</field>
             <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="view_hop_dong_search"/>
+            <field name="search_view_id" ref="view_hop_dong_search" />
         </record>
 
     </data>

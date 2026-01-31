@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_contract_form" model="ir.ui.view">
+            <field name="name">contract</field>
+            <field name="model">contract</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_read_only" style="font-size:25px">Hợp đồng</div>
+                        <group col="4" string="Thông tin chung">
+                            <field name="contract_id"/>
+                            <field name="contract_name"/>
+                            <field name="customer_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="state"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_contract_tree" model="ir.ui.view">
+            <field name="name">contract</field>
+            <field name="model">contract</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="contract_id"/>
+                    <field name="contract_name"/>
+                    <field name="customer_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="contract_search">
+            <field name="model">contract</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="contract_id"/>
+                    <field name="contract_name"/>
+                    <field name="customer_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_contract" model="ir.actions.act_window">
+            <field name="name">Hợp đồng</field>
+            <field name="res_model">contract</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="contract_search"/>
+        </record>
+    </data>
+</odoo>

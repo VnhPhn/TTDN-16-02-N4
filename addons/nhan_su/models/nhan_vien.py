@@ -55,6 +55,13 @@ class NhanVien(models.Model):
         inverse_name='nhan_vien_id',
         string='Hợp đồng'
     )
+
+    # Lương cơ bản
+    luong_co_ban = fields.Float(
+        string="Lương cơ bản",
+        default=0.0,
+        help="Lương cơ bản hàng tháng"
+    )
     
     so_a = fields.Integer("Số A")
     so_b = fields.Integer("Số B")

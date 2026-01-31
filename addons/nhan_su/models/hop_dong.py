@@ -38,8 +38,5 @@ class HopDong(models.Model):
         string='Phòng ban',
         readonly=True
     )
-
-    luong_co_ban = fields.Float("Lương cơ bản")
-    phu_cap = fields.Float("Phụ cấp")
     
     ghi_chu = fields.Text("Ghi chú")

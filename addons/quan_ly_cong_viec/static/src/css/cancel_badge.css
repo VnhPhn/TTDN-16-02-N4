@@ -1,0 +1,13 @@
+/* Style the state badge when decorated-danger is applied (cancel state). */
+.o_decorated_danger .badge, .o_decorated_danger .o_badge, .o_decorated_danger .badge-inner {
+  background-color: #f8c7c7 !important; /* light red background */
+  color: #000000 !important; /* black text */
+  border: 1px solid #f59b9b !important;
+}
+
+/* Some Odoo versions render the badge without .badge-inner; cover common selectors */
+.o_field_widget.o_badge.o_decorated_danger {
+  background-color: #f8c7c7 !important;
+  color: #000000 !important;
+  border: 1px solid #f59b9b !important;
+}

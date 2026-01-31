@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Marketing Task List View -->
+        <record id="marketing_task_list_view" model="ir.ui.view">
+            <field name="name">Marketing Task List</field>
+            <field name="model">marketing_task</field>
+            <field name="arch" type="xml">
+                <tree string="Công việc Marketing" decoration-success="state == 'done'" decoration-danger="is_overdue" decoration-warning="state == 'doing'">
+                    <field name="is_overdue" invisible="1"/>
+                    <field name="task_id" readonly="1" widget="badge" decoration-info="True"/>
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="source_model"/>
+                    <field name="task_type"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="priority" widget="badge"/>
+                    <field name="deadline"/>
+                    <field name="state" widget="badge" decoration-success="state == 'done'" decoration-danger="state == 'cancel'"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Marketing Task Form View -->
+        <record id="marketing_task_form_view" model="ir.ui.view">
+            <field name="name">Marketing Task Form</field>
+            <field name="model">marketing_task</field>
+            <field name="arch" type="xml">
+                <form string="Công việc Marketing">
+                    <header>
+                        <button name="action_start" string="Bắt đầu" states="todo" type="object" class="btn-success"/>
+                        <button name="action_done" string="Hoàn thành" states="doing" type="object" class="btn-primary"/>
+                        <button name="action_cancel" string="Hủy" states="todo,doing" type="object" class="btn-warning"/>
+                        <field name="state" widget="statusbar" statusbar_visible="todo,doing,done,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: {&quot;string_true&quot;: &quot;Hoạt động&quot;, &quot;string_false&quot;: &quot;Không hoạt động&quot;}}"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="task_id" readonly="1" widget="badge" decoration-info="True"/>
+                                <field name="name" placeholder="Tên công việc"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="customer_id"/>
+                                <field name="phong_ban_id" readonly="1"/>
+                                <field name="nhan_vien_id" domain="[('phong_ban_id.ten_phong', '=', 'Marketing')]"/>
+                            </group>
+                            <group>
+                                <field name="source_model" required="1"/>
+                                <field name="source_id"/>
+                                <field name="task_type"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="priority"/>
+                                <field name="difficulty"/>
+                                <field name="progress" widget="progressbar"/>
+                            </group>
+                            <group>
+                                <field name="estimated_hours"/>
+                                <field name="actual_hours"/>
+                                <field name="deadline"/>
+                                <field name="actual_completion_date" states="done"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="team_member_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="description" placeholder="Mô tả chi tiết công việc"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Marketing Task Search View -->
+        <record id="marketing_task_search_view" model="ir.ui.view">
+            <field name="name">Marketing Task Search</field>
+            <field name="model">marketing_task</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm công việc Marketing">
+                    <field name="name" string="Tên công việc"/>
+                    <field name="customer_id"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="source_model"/>
+                    <separator/>
+                    <filter string="Chưa làm" name="todo" domain="[('state', '=', 'todo')]"/>
+                    <filter string="Đang làm" name="doing" domain="[('state', '=', 'doing')]"/>
+                    <filter string="Hoàn thành" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Hủy" name="cancel" domain="[('state', '=', 'cancel')]"/>
+                    <separator/>
+                    <filter string="Quá hạn" name="overdue" domain="[('is_overdue', '=', True)]"/>
+                    <filter string="Ưu tiên cao" name="high_priority" domain="[('priority', 'in', ['high', 'urgent'])]"/>
+                    <separator/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Trạng thái" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Nhân viên" name="nhan_vien" context="{'group_by': 'nhan_vien_id'}"/>
+                        <filter string="Ưu tiên" name="priority" context="{'group_by': 'priority'}"/>
+                        <filter string="Nguồn" name="source" context="{'group_by': 'source_model'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Marketing Task Action -->
+        <record id="marketing_task_action" model="ir.actions.act_window">
+            <field name="name">Công việc Marketing</field>
+            <field name="res_model">marketing_task</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="marketing_task_search_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo công việc Marketing mới!
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

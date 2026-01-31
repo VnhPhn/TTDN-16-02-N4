@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_crm_interact_form" model="ir.ui.view">
+            <field name="name">crm_interact</field>
+            <field name="model">crm_interact</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_read_only" style="font-size:25px">Tương tác</div>
+                        <group col="4" string="Thông tin chung">
+                            <field name="crm_interact_id"/>
+                            <field name="crm_interact_name"/>
+                            <field name="customer_id"/>
+                            <field name="interaction_type"/>
+                            <field name="date"/>
+                            <field name="note"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_crm_interact_tree" model="ir.ui.view">
+            <field name="name">crm_interact</field>
+            <field name="model">crm_interact</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="crm_interact_id"/>
+                    <field name="crm_interact_name"/>
+                    <field name="interaction_type"/>
+                    <field name="date"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="crm_interact_search">
+            <field name="model">crm_interact</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="crm_interact_id"/>
+                    <field name="crm_interact_name"/>
+                    <field name="interaction_type"/>
+                    <field name="date"/>
+                    <filter string="Tương tác trong tháng" name="this_month_interactions" domain="[('date', '&gt;=', context_today().strftime('%Y-%m-01'))]"/>
+                    <filter string="Tương tác cũ" name="old_interactions" domain="[('date', '&lt;', context_today().strftime('%Y-%m-01'))]"/>
+
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_crm_interact" model="ir.actions.act_window">
+            <field name="name">Tương tác</field>
+            <field name="res_model">crm_interact</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="crm_interact_search"/>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_crm_interact_root" name="Quản lý Tương tác"/>
+        <menuitem id="menu_crm_interact" name="Tương tác" parent="menu_crm_interact_root" action="action_crm_interact" sequence="10"/>
+    </data>
+</odoo>

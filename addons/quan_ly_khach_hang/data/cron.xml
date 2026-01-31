@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cron_send_birthday_emails" model="ir.cron">
+        <field name="name">Gửi Email Chúc Mừng Sinh Nhật</field>
+        <field name="model_id" ref="quan_ly_khach_hang.model_customer"/>
+        <field name="state">code</field>
+        <field name="code">model.send_birthday_emails()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="cron_recompute_customer_tiers" model="ir.cron">
+        <field name="name">Recompute Customer Tiers</field>
+        <field name="model_id" ref="quan_ly_khach_hang.model_customer"/>
+        <field name="state">code</field>
+        <field name="code">model.recompute_customer_tiers()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_expire_loyalty_points" model="ir.cron">
+        <field name="name">Expire Loyalty Points</field>
+        <field name="model_id" ref="quan_ly_khach_hang.model_customer"/>
+        <field name="state">code</field>
+        <field name="code">model.expire_loyalty_points()</field>
+        <field name="interval_number">7</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active" eval="True"/>
+    </record>
+        <record id="cron_feedback_sentiment_batch" model="ir.cron">
+            <field name="name">Feedback Sentiment Batch</field>
+            <field name="model_id" ref="quan_ly_khach_hang.model_feedback"/>
+            <field name="state">code</field>
+            <field name="code">model.analyze_sentiment()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="True"/>
+        </record>
+</odoo>

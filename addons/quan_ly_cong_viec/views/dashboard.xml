@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!-- ✅ PIVOT VIEW (Bảng phân tích) -->
+    <record id="view_project_task_pivot" model="ir.ui.view">
+      <field name="name">project_task.pivot</field>
+      <field name="model">project_task</field>
+      <field name="arch" type="xml">
+        <pivot string="Phân Tích Công Việc Chi Tiết">
+          <field name="phong_ban_id" type="row"/>
+          <field name="state" type="row"/>
+          <field name="priority" type="col"/>
+          <field name="progress" type="measure"/>
+        </pivot>
+      </field>
+    </record>
+
+    <!-- ✅ GRAPH VIEW - Biểu đồ theo trạng thái -->
+    <record id="view_project_task_graph_state" model="ir.ui.view">
+      <field name="name">project_task.graph.state</field>
+      <field name="model">project_task</field>
+      <field name="arch" type="xml">
+        <graph string="Công Việc Theo Trạng Thái" type="pie">
+          <field name="state"/>
+        </graph>
+      </field>
+    </record>
+
+    <!-- ✅ GRAPH VIEW - Biểu đồ theo ưu tiên -->
+    <record id="view_project_task_graph_priority" model="ir.ui.view">
+      <field name="name">project_task.graph.priority</field>
+      <field name="model">project_task</field>
+      <field name="arch" type="xml">
+        <graph string="Công Việc Theo Mức Độ Ưu Tiên" type="bar">
+          <field name="priority"/>
+          <field name="estimated_hours" type="measure"/>
+        </graph>
+      </field>
+    </record>
+
+    <!-- ✅ GRAPH VIEW - Biểu đồ theo bộ phận -->
+    <record id="view_project_task_graph_department" model="ir.ui.view">
+      <field name="name">project_task.graph.department</field>
+      <field name="model">project_task</field>
+      <field name="arch" type="xml">
+        <graph string="Công Việc Theo Bộ Phận" type="bar">
+          <field name="phong_ban_id"/>
+          <field name="estimated_hours" type="measure"/>
+        </graph>
+      </field>
+    </record>
+
+    <!-- ✅ GRAPH VIEW - Biểu đồ theo nhân viên (số lượng nhiệm vụ) -->
+    <record id="view_project_task_graph_employee" model="ir.ui.view">
+      <field name="name">project_task.graph.employee</field>
+      <field name="model">project_task</field>
+      <field name="arch" type="xml">
+        <graph string="Số Nhiệm Vụ Theo Nhân Viên" type="bar">
+          <field name="nhan_vien_id"/>
+          <field name="id" type="measure"/>
+        </graph>
+      </field>
+    </record>
+
+    <!-- ✅ KANBAN VIEW (Bảng Kanban - dễ quản lý) -->
+    <record id="view_project_task_kanban" model="ir.ui.view">
+      <field name="name">project_task.kanban</field>
+      <field name="model">project_task</field>
+      <field name="arch" type="xml">
+        <kanban default_group_by="state" quick_create="false">
+          <field name="id"/>
+          <field name="name"/>
+          <field name="customer_id"/>
+          <field name="nhan_vien_id"/>
+          <field name="priority"/>
+          <field name="deadline"/>
+          <field name="is_overdue"/>
+          <field name="progress"/>
+          <field name="state"/>
+
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_card oe_kanban_global_click #{record.is_overdue.raw_value and 'border-danger' or ''}">
+                <div class="oe_kanban_content">
+                  <!-- Mã nhiệm vụ -->
+                  <div>
+                    <strong><field name="project_task_id"/></strong>
+                  </div>
+
+                  <!-- Tên công việc -->
+                  <div class="o_text_overflow">
+                    <strong><field name="name"/></strong>
+                  </div>
+
+                  <!-- Khách hàng -->
+                  <div class="text-muted">
+                    <small>KH: <field name="customer_id"/></small>
+                  </div>
+
+                  <!-- Nhân viên -->
+                  <div class="text-muted">
+                    <small>NV: <field name="nhan_vien_id"/></small>
+                  </div>
+
+                  <!-- Deadline -->
+                  <div t-if="record.deadline.raw_value">
+                    <small>
+                      <t t-if="record.is_overdue.raw_value">
+                        <span class="badge badge-danger">⚠️ Quá hạn</span>
+                      </t>
+                      <t t-else="">
+                        <span class="badge badge-info"><field name="deadline"/></span>
+                      </t>
+                    </small>
+                  </div>
+
+                  <!-- Progress Bar -->
+                  <div class="mt-2">
+                    <div class="progress" style="height: 20px;">
+                      <div t-attf-class="progress-bar #{record.progress.raw_value >= 100 and 'bg-success' or record.progress.raw_value >= 50 and 'bg-warning' or 'bg-info'}"
+                           t-attf-style="width: #{record.progress.raw_value}%">
+                        <span style="color: white; font-size: 12px;"><field name="progress"/>%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Priority Badge -->
+                  <div class="mt-2">
+                    <span t-attf-class="badge #{record.priority.raw_value == 'urgent' and 'badge-danger' or record.priority.raw_value == 'high' and 'badge-warning' or 'badge-secondary'}">
+                      <field name="priority"/>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <!-- ✅ CALENDAR VIEW (Lịch deadline) -->
+    <record id="view_project_task_calendar" model="ir.ui.view">
+      <field name="name">project_task.calendar</field>
+      <field name="model">project_task</field>
+      <field name="arch" type="xml">
+        <calendar string="Lịch Công Việc" date_start="deadline" color="priority">
+          <field name="name"/>
+          <field name="customer_id"/>
+          <field name="nhan_vien_id"/>
+        </calendar>
+      </field>
+    </record>
+
+    <!-- ✅ ACTION PIVOT (Bảng phân tích riêng) -->
+    <record id="action_project_task_pivot" model="ir.actions.act_window">
+      <field name="name">📊 Phân Tích Chi Tiết</field>
+      <field name="res_model">project_task</field>
+      <field name="view_mode">pivot,graph,form</field>
+      <field name="view_id" ref="view_project_task_pivot"/>
+    </record>
+
+    <!-- ✅ ACTION GRAPH - Trạng thái -->
+    <record id="action_project_task_graph_state" model="ir.actions.act_window">
+      <field name="name">📈 Biểu Đồ Trạng Thái</field>
+      <field name="res_model">project_task</field>
+      <field name="view_mode">graph,pivot,form</field>
+      <field name="view_id" ref="view_project_task_graph_state"/>
+    </record>
+
+    <!-- ✅ ACTION GRAPH - Ưu tiên -->
+    <record id="action_project_task_graph_priority" model="ir.actions.act_window">
+      <field name="name">🚨 Biểu Đồ Mức Độ Ưu Tiên</field>
+      <field name="res_model">project_task</field>
+      <field name="view_mode">graph,pivot,form</field>
+      <field name="view_id" ref="view_project_task_graph_priority"/>
+    </record>
+
+    <!-- ✅ ACTION GRAPH - Bộ phận -->
+    <record id="action_project_task_graph_department" model="ir.actions.act_window">
+      <field name="name">🏢 Biểu Đồ Bộ Phận</field>
+      <field name="res_model">project_task</field>
+      <field name="view_mode">graph,pivot,form</field>
+      <field name="view_id" ref="view_project_task_graph_department"/>
+    </record>
+
+    <!-- ✅ ACTION GRAPH - Nhân viên -->
+    <record id="action_project_task_graph_employee" model="ir.actions.act_window">
+      <field name="name">👥 Biểu Đồ Nhân Viên</field>
+      <field name="res_model">project_task</field>
+      <field name="view_mode">graph,pivot,form</field>
+      <field name="view_id" ref="view_project_task_graph_employee"/>
+    </record>
+
+    <!-- ✅ ACTION KANBAN (Bảng Kanban riêng) -->
+    <record id="action_project_task_kanban" model="ir.actions.act_window">
+      <field name="name">Công Việc - Kanban</field>
+      <field name="res_model">project_task</field>
+      <field name="view_mode">kanban,form,tree</field>
+      <field name="view_id" ref="view_project_task_kanban"/>
+    </record>
+
+    <!-- ✅ ACTION CALENDAR (Lịch riêng) -->
+    <record id="action_project_task_calendar" model="ir.actions.act_window">
+      <field name="name">Lịch Công Việc</field>
+      <field name="res_model">project_task</field>
+      <field name="view_mode">calendar,kanban,form</field>
+      <field name="view_id" ref="view_project_task_calendar"/>
+    </record>
+
+  
+    <!-- Dashboard action referenced by menu -->
+    <record id="dashboard_action" model="ir.actions.act_window">
+      <field name="name">B\u1ea3ng \u0111i\u1ec1u khi\u1ec3n</field>
+      <field name="res_model">project_task</field>
+      <field name="view_mode">kanban,form,tree</field>
+      <field name="view_id" ref="view_project_task_kanban"/>
+    </record>
+</data>
+</odoo>

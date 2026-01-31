@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem
+            id="menu_root"
+            name="QLKH"
+            sequence="0"
+        />
+        <menuitem name="Khách hàng" 
+            id="menu_customer" 
+            parent="menu_root" 
+            sequence="1"
+            action="action_customer"
+        />
+        <menuitem name="Cơ hội" 
+            id="menu_crm_lead" 
+            parent="menu_root" 
+            sequence="3"
+            action="action_crm_lead"
+        />
+            <menuitem name="Tương tác" 
+            id="menu_crm_interact" 
+            parent="menu_root" 
+            sequence="4"
+            action="action_crm_interact"
+        />
+            <menuitem name="Hợp đồng" 
+            id="menu_contract" 
+            parent="menu_root" 
+            sequence="5"
+            action="action_contract"
+        />
+            <menuitem name="Lịch sử giao dịch" 
+            id="menu_sale_order" 
+            parent="menu_root" 
+            sequence="6"
+            action="action_sale_order"
+        />
+            <menuitem name="Ghi chú" 
+            id="menu_note" 
+            parent="menu_root" 
+            sequence="7"
+            action="action_note"
+        />
+            <menuitem name="Phản hồi" 
+            id="menu_feedback" 
+            parent="menu_root" 
+            sequence="8"
+            action="action_feedback"
+        />
+            <menuitem name="Marketing" 
+            id="menu_marketing_campaign" 
+            parent="menu_root" 
+            sequence="10"
+            action="action_marketing_campaign"
+        />
+    </data>
+</odoo>

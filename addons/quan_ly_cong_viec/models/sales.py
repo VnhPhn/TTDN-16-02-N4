@@ -1,0 +1,283 @@
+# -*- coding: utf-8 -*-
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+from datetime import date
+
+class SalesTask(models.Model):
+    _name = 'sales_task'
+    _description = 'Công việc Sales'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _order = 'create_date desc'
+    active = fields.Boolean(
+    string="Hoạt động",
+    default=True,
+    tracking=True
+    )
+
+    task_id = fields.Char("Mã công việc", copy=False, readonly=True, index=True)
+    name = fields.Char("Tên công việc", required=True, tracking=True)
+
+    customer_id = fields.Many2one(
+        'customer', string="Khách hàng",
+        required=True, ondelete='cascade', index=True
+    )
+
+    phong_ban_id = fields.Many2one(
+        'phong_ban',
+        string="Bộ phận",
+        default=lambda self: self.env['phong_ban'].search([('ten_phong', '=', 'Sales')], limit=1),
+        readonly=True,
+        ondelete='restrict'
+    )
+
+    nhan_vien_id = fields.Many2one(
+        'nhan_vien',
+        string="Nhân viên chính phụ trách",
+        ondelete='set null',
+        tracking=True,
+        domain="[('phong_ban_id.ten_phong', '=', 'Sales')]"
+    )
+
+    team_member_ids = fields.Many2many(
+        'nhan_vien',
+        'sales_task_nhan_vien_rel',
+        'task_id',
+        'nhan_vien_id',
+        string="Thành viên tham gia",
+        domain="[('phong_ban_id.ten_phong', '=', 'Sales')]"
+    )
+
+    project_task_id = fields.Many2one(
+        'project_task', string='Project Task', ondelete='cascade', copy=False,
+        help='Mirrored project_task record for dashboard aggregation')
+
+    # Source
+    source_model = fields.Selection([
+        ('crm_lead', 'Cơ hội'),
+        ('contract', 'Ký kết hợp đồng'),
+        ('sale_order', 'Xử lý đơn hàng'),
+    ], string="Nguồn", required=True, tracking=True)
+
+    source_id = fields.Integer("ID Nguồn")
+
+    description = fields.Text("Mô tả")
+    
+    task_type = fields.Selection([
+        ('follow_up_lead', 'Follow-up Lead'),
+        ('dam_phan', 'Đàm phán'),
+        ('ky_ket', 'Ký kết'),
+        ('xu_ly_don', 'Xử lý đơn hàng'),
+    ], string="Loại công việc", tracking=True)
+
+    priority = fields.Selection([
+        ('low', '🟢 Thấp'),
+        ('medium', '🟡 Trung bình'),
+        ('high', '🔴 Cao'),
+        ('urgent', '🚨 Khẩn cấp'),
+    ], default='medium', string="Mức độ ưu tiên", tracking=True, index=True)
+
+    difficulty = fields.Selection([
+        ('easy', '⭐ Dễ'),
+        ('normal', '⭐⭐ Bình thường'),
+        ('hard', '⭐⭐⭐ Khó'),
+        ('very_hard', '⭐⭐⭐⭐ Rất khó'),
+    ], default='normal', string="Mức độ khó", tracking=True)
+
+    estimated_hours = fields.Float("Thời gian ước tính (giờ)", default=0.0, tracking=True)
+    actual_hours = fields.Float("Thời gian thực tế (giờ)", default=0.0, tracking=True)
+    progress = fields.Float("Tiến độ (%)", default=0.0, tracking=True)
+
+    deadline = fields.Date("Hạn chót", tracking=True)
+    actual_completion_date = fields.Date("Ngày hoàn thành thực tế", tracking=True)
+
+    state = fields.Selection([
+        ('todo', 'Chưa làm'),
+        ('doing', 'Đang làm'),
+        ('done', 'Hoàn thành'),
+        ('cancel', 'Hủy'),
+    ], default='todo', string="Trạng thái", tracking=True)
+
+    is_overdue = fields.Boolean("Quá hạn", compute="_compute_is_overdue", store=True)
+    days_remaining = fields.Integer(
+        "Số ngày còn lại",
+        compute="_compute_days_remaining",
+        store=False
+    )
+
+    @api.depends('deadline')
+    def _compute_days_remaining(self):
+        today = date.today()
+        for rec in self:
+            if rec.deadline:
+                remaining = (rec.deadline - today).days
+                rec.days_remaining = remaining
+            else:
+                rec.days_remaining = 0
+
+    @api.model
+    def create(self, vals):
+        # support single dict or list-of-dicts
+        seq_code = 'sales_task'
+        if not self.env['ir.sequence'].search([('code', '=', seq_code)], limit=1):
+            self.env['ir.sequence'].sudo().create({
+                'name': 'Sales Task Sequence',
+                'code': seq_code,
+                'prefix': 'SALES',
+                'padding': 5,
+                'number_next': 1,
+            })
+        if isinstance(vals, list):
+            for v in vals:
+                if not v.get('task_id') or v.get('task_id') == 'New':
+                    v['task_id'] = self.env['ir.sequence'].next_by_code(seq_code)
+            records = super().create(vals)
+        else:
+            if not vals.get('task_id') or vals.get('task_id') == 'New':
+                vals['task_id'] = self.env['ir.sequence'].next_by_code(seq_code)
+            records = super().create(vals)
+
+        # Mirror to project_task
+        ptask_env = self.env['project_task'].with_context(from_sales=True)
+        to_write = []
+        for rec in records:
+            if rec.project_task_id:
+                continue
+            pvals = {
+                'name': rec.name,
+                'customer_id': rec.customer_id.id if rec.customer_id else False,
+                'phong_ban_id': rec.phong_ban_id.id if rec.phong_ban_id else False,
+                'nhan_vien_id': rec.nhan_vien_id.id if rec.nhan_vien_id else False,
+                'description': rec.description or False,
+                'task_type': rec.task_type or False,
+                'priority': rec.priority or False,
+                'difficulty': rec.difficulty or False,
+                'estimated_hours': rec.estimated_hours or 0.0,
+                'actual_hours': rec.actual_hours or 0.0,
+                'progress': rec.progress or 0.0,
+                'deadline': rec.deadline or False,
+                'actual_completion_date': rec.actual_completion_date or False,
+                'state': rec.state or 'todo',
+            }
+            p = ptask_env.create(pvals)
+            to_write.append((rec.id, p.id))
+        if to_write:
+            for rid, pid in to_write:
+                self.browse(rid).write({'project_task_id': pid})
+        return records
+
+    @api.model
+    def create_from_lead(self, leads):
+        to_create = []
+        for lead in leads:
+            if not getattr(lead, 'customer_id', False):
+                continue
+            name = lead.crm_lead_name if hasattr(lead, 'crm_lead_name') else (getattr(lead, 'crm_lead_id', False) or f'Lead {lead.id}')
+            to_create.append({
+                'name': name,
+                'customer_id': lead.customer_id.id,
+                'source_model': 'crm_lead',
+                'source_id': lead.id,
+                'description': f'Auto tạo từ cơ hội: {name}',
+            })
+        if to_create:
+            return self.create(to_create)
+        return self.browse()
+
+    @api.model
+    def create_from_contract(self, contracts):
+        to_create = []
+        for c in contracts:
+            if not getattr(c, 'customer_id', False):
+                continue
+            name = c.contract_name if hasattr(c, 'contract_name') else (getattr(c, 'contract_id', False) or f'Contract {c.id}')
+            to_create.append({
+                'name': name,
+                'customer_id': c.customer_id.id,
+                'source_model': 'contract',
+                'source_id': c.id,
+                'description': f'Auto tạo từ hợp đồng: {name}',
+            })
+        if to_create:
+            return self.create(to_create)
+        return self.browse()
+
+    @api.model
+    def create_from_sale_order(self, orders):
+        to_create = []
+        for o in orders:
+            if not getattr(o, 'customer_id', False):
+                continue
+            name = o.sale_order_name if hasattr(o, 'sale_order_name') else (getattr(o, 'sale_order_id', False) or f'Order {o.id}')
+            to_create.append({
+                'name': name,
+                'customer_id': o.customer_id.id,
+                'source_model': 'sale_order',
+                'source_id': o.id,
+                'description': f'Auto tạo từ đơn hàng: {name}',
+            })
+        if to_create:
+            return self.create(to_create)
+        return self.browse()
+
+    @api.depends('deadline', 'actual_completion_date', 'state')
+    def _compute_is_overdue(self):
+        today = date.today()
+        for rec in self:
+            if rec.state == 'done' and rec.actual_completion_date and rec.deadline:
+                rec.is_overdue = rec.actual_completion_date > rec.deadline
+            elif rec.state != 'done' and rec.deadline:
+                rec.is_overdue = today > rec.deadline
+            else:
+                rec.is_overdue = False
+
+    @api.constrains('progress')
+    def _check_progress(self):
+        for rec in self:
+            if rec.progress < 0 or rec.progress > 100:
+                raise ValidationError("Tiến độ phải từ 0 đến 100%")
+
+    @api.constrains('estimated_hours', 'actual_hours')
+    def _check_hours(self):
+        for rec in self:
+            if rec.estimated_hours < 0:
+                raise ValidationError("Thời gian ước tính không được âm!")
+            if rec.actual_hours < 0:
+                raise ValidationError("Thời gian thực tế không được âm!")
+
+    def action_start(self):
+        for rec in self:
+            rec.state = 'doing'
+
+    def action_done(self):
+        for rec in self:
+            if rec.state == 'cancel':
+                raise ValidationError("Công việc đã hủy, không thể hoàn thành.")
+            rec.state = 'done'
+            rec.progress = 100.0
+            if not rec.actual_completion_date:
+                rec.actual_completion_date = fields.Date.today()
+
+    def action_cancel(self):
+        for rec in self:
+            rec.state = 'cancel'
+
+    def write(self, vals):
+        res = super().write(vals)
+        if self._context.get('from_project_task'):
+            return res
+        propagate_fields = {}
+        allowed = ['name', 'description', 'deadline', 'progress', 'state', 'nhan_vien_id', 'priority', 'task_type']
+        for f in allowed:
+            if f in vals:
+                propagate_fields[f] = vals[f]
+        if propagate_fields:
+            for rec in self.filtered('project_task_id'):
+                rec.project_task_id.with_context(from_sales=True).write(propagate_fields)
+        return res
+
+    def unlink(self):
+        pts = self.mapped('project_task_id')
+        # avoid recursion when unlink originates from project_task
+        if pts and not self._context.get('from_project_task'):
+            pts.with_context(from_sales=True).unlink()
+        return super().unlink()

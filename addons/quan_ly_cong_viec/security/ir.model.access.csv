@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_task_user,access_project_task_user,model_project_task,,1,1,1,1
+access_cskh_task_user,access_cskh_task_user,model_cskh_task,,1,1,1,1
+access_sales_task_user,access_sales_task_user,model_sales_task,,1,1,1,1
+access_marketing_task_user,access_marketing_task_user,model_marketing_task,,1,1,1,1
+access_ky_thuat_task_user,access_ky_thuat_task_user,model_ky_thuat_task,,1,1,1,1
+
+
+
+
+

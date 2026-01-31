@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="view_note_form" model="ir.ui.view">
+            <field name="name">note</field>
+            <field name="model">note</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_read_only" style="font-size:25px">Ghi chú</div>
+                        <group col="4" string="Thông tin chung">
+                            <field name="note_id"/>
+                            <field name="note_name"/>
+                            <field name="customer_id"/>
+                            <field name="note"/>
+                            <field name="date"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_note_tree" model="ir.ui.view">
+            <field name="name">note</field>
+            <field name="model">note</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="note_id"/>
+                    <field name="note_name"/>
+                    <field name="customer_id"/>
+                    <field name="note"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record model="ir.ui.view" id="note_search">
+            <field name="model">note</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="note_id"/>
+                    <field name="note_name"/>
+                    <field name="customer_id"/>
+                    <field name="note"/>
+                    <field name="date"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_note" model="ir.actions.act_window">
+            <field name="name">Ghi chú</field>
+            <field name="res_model">note</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="note_search"/>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_note_root" name="Quản lý Ghi chú"/>
+        <menuitem id="menu_note" name="Ghi chú" parent="menu_note_root" action="action_note" sequence="10"/>
+    </data>
+</odoo>

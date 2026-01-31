@@ -24,37 +24,15 @@
                             <field name="phong_ban_id"/>
                         </group>
 
+                        <group col="4" string="Thông tin lương">
+                            <field name="luong_co_ban"/>
+                        </group>
+
                         <group string="Hợp đồng">
                             <field name="hop_dong_ids" context="{'default_nhan_vien_id': active_id}">
-                                <tree editable="bottom">
-                                    <field name="so_hd" string="Số HĐ"/>
+                                <tree editable="false" create="false" delete="false">
                                     <field name="loai_hop_dong"/>
-                                    <field name="ngay_ky"/>
-                                    <field name="ngay_het_han"/>
-                                    <field name="trang_thai"/>
-                                    <field name="luong_co_ban"/>
                                 </tree>
-                                <form string="Hợp đồng">
-                                    <sheet>
-                                        <group col="4" string="Thông tin hợp đồng">
-                                            <field name="so_hd"/>
-                                          <field name="loai_hop_dong"/>
-                                            <field name="ngay_ky"/>
-                                            <field name="ngay_het_han"/>
-                                            <field name="trang_thai"/>
-                                        </group>
-                                        <group col="4" string="Thông tin lương">
-                                            <field name="luong_co_ban"/>
-                                            <field name="phu_cap"/>
-                                        </group>
-                                        <group string="Mô tả">
-                                            <field name="mo_ta" nolabel="1"/>
-                                        </group>
-                                        <group string="Ghi chú">
-                                            <field name="ghi_chu" nolabel="1"/>
-                                        </group>
-                                    </sheet>
-                                </form>
                             </field>
                         </group>
 
@@ -74,6 +52,7 @@
                     <field name="ngay_bat_dau_lam_viec"/>
                     <field name="chuc_vu_id"/>
                     <field name="phong_ban_id"/>
+                    <field name="luong_co_ban"/>
                 </tree>
             </field>
         </record>

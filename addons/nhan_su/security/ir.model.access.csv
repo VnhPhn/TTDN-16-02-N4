@@ -5,6 +5,8 @@ access_chung_chi,access_chung_chi,model_chung_chi,base.group_user,1,1,1,1
 access_chuc_vu,access_chuc_vu,model_chuc_vu,base.group_user,1,1,1,1
 access_lich_su_cong_tac,access_lich_su_cong_tac,model_lich_su_cong_tac,base.group_user,1,1,1,1
 access_hop_dong,access_hop_dong,model_hop_dong,base.group_user,1,1,1,1
+access_cham_cong,access_cham_cong,model_cham_cong,base.group_user,1,1,1,1
+access_bang_luong,access_bang_luong,model_bang_luong,base.group_user,1,1,1,1
 
 
 

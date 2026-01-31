@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- FORM VIEW -->
+        <record id="view_bang_luong_form" model="ir.ui.view">
+            <field name="name">bang_luong.form</field>
+            <field name="model">bang_luong</field>
+            <field name="arch" type="xml">
+                <form string="Bảng lương">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="nhan_vien_id" string="Nhân viên" />
+                            </h1>
+                        </div>
+
+                        <group col="4" string="Thông tin lương">
+                            <field name="thang_nam" placeholder="MM/YYYY" />
+                            <field name="luong_co_ban" readonly="1" />
+                        </group>
+
+                        <group col="4" string="Thông tin công">
+                            <field name="so_gio_lam" readonly="1" />
+                            <field name="so_cong" readonly="1" />
+                        </group>
+
+                        <group col="4" string="Thưởng/Phạt">
+                            <field name="tien_thuong" />
+                            <field name="tien_phat" />
+                        </group>
+
+                        <group col="4" string="Lương">
+                            <field name="luong_nhan" readonly="1" widget="monetary" />
+                        </group>
+
+                        <group string="Ghi chú">
+                            <field name="ghi_chu" nolabel="1" />
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- TREE VIEW -->
+        <record id="view_bang_luong_tree" model="ir.ui.view">
+            <field name="name">bang_luong.tree</field>
+            <field name="model">bang_luong</field>
+            <field name="arch" type="xml">
+                <tree string="Bảng lương">
+                    <field name="thang_nam" />
+                    <field name="nhan_vien_id" />
+                    <field name="so_gio_lam" />
+                    <field name="so_cong" />
+                    <field name="luong_co_ban" />
+                    <field name="tien_thuong" />
+                    <field name="tien_phat" />
+                    <field name="luong_nhan" sum="Tổng lương" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- SEARCH VIEW -->
+        <record id="view_bang_luong_search" model="ir.ui.view">
+            <field name="name">bang_luong.search</field>
+            <field name="model">bang_luong</field>
+            <field name="arch" type="xml">
+                <search string="Bảng lương">
+                    <field name="thang_nam" />
+                    <field name="nhan_vien_id" />
+                    <separator />
+                    <filter name="thang_hien_tai" string="Tháng hiện tại"
+                        domain="[('thang_nam', 'ilike', ('_get_month_year_current'))]" />
+                </search>
+            </field>
+        </record>
+
+        <!-- ACTION VIEW -->
+        <record id="action_bang_luong" model="ir.actions.act_window">
+            <field name="name">Bảng lương</field>
+            <field name="res_model">bang_luong</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo bản ghi bảng lương mới
+                </p>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

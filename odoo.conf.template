@@ -7,3 +7,4 @@ db_password = odoo
 addons_path = /usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
 xmlrpc_port = 7000
 
+q

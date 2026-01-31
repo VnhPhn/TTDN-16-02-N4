@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_sale_order_form" model="ir.ui.view">
+            <field name="name">sale_order</field>
+            <field name="model">sale_order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_read_only" style="font-size:25px">Lịch sử giao dịch</div>
+                        <group col="4" string="Thông tin chung">
+                            <field name="sale_order_id"/>
+                            <field name="sale_order_name"/>
+                            <field name="customer_id"/>
+                            <field name="date_order"/>
+                            <field name="amount_total"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_sale_order_tree" model="ir.ui.view">
+            <field name="name">sale_order</field>
+            <field name="model">sale_order</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sale_order_id"/>
+                    <field name="sale_order_name"/>
+                    <field name="customer_id"/>
+                    <field name="date_order"/>
+                    <field name="amount_total"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_order_search">
+            <field name="model">sale_order</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="sale_order_id"/>
+                    <field name="sale_order_name"/>
+                    <field name="customer_id"/>
+                    <field name="date_order"/>
+                    <field name="amount_total"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_sale_order" model="ir.actions.act_window">
+            <field name="name">Lịch sử giao dịch</field>
+            <field name="res_model">sale_order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="sale_order_search"/>
+        </record>
+    </data>
+</odoo>

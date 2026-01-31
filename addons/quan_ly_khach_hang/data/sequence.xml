@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_customer_id" model="ir.sequence">
+        <field name="name">Mã Khách Hàng</field>
+        <field name="code">customer.id</field>
+        <field name="prefix">KH</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>

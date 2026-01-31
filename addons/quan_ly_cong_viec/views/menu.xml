@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data>
+        <!-- Main Menu -->
+        <menuitem id="quan_ly_cong_viec_root" name="Quản lý công việc" sequence="10"/>
+
+        <!-- Dashboard Menu (parent) -->
+        <menuitem id="dashboard_menu" name="Bảng điều khiển" parent="quan_ly_cong_viec_root" sequence="1"/>
+
+        <!-- Dashboard children: All tasks + Graphs -->
+        <menuitem id="dashboard_all_tasks" name="Tất cả công việc" parent="dashboard_menu" sequence="1" action="action_project_task_kanban"/>
+        <menuitem id="dashboard_graphs" name="Biểu đồ" parent="dashboard_menu" sequence="2"/>
+        <menuitem id="dashboard_graph_state" name="Trạng thái" parent="dashboard_graphs" sequence="1" action="action_project_task_graph_state"/>
+        <menuitem id="dashboard_graph_priority" name="Mức độ ưu tiên" parent="dashboard_graphs" sequence="2" action="action_project_task_graph_priority"/>
+        <menuitem id="dashboard_graph_department" name="Bộ phận" parent="dashboard_graphs" sequence="3" action="action_project_task_graph_department"/>
+        <menuitem id="dashboard_graph_employee" name="Nhân viên" parent="dashboard_graphs" sequence="4" action="action_project_task_graph_employee"/>
+
+        <!-- Phòng ban menus -->
+       
+        <menuitem id="cskh_task_menu" name="Công việc CSKH" parent="quan_ly_cong_viec_root" action="cskh_task_action" sequence="1"/>
+
+        <menuitem id="sales_task_menu" name="Công việc Sales" parent="quan_ly_cong_viec_root" action="sales_task_action" sequence="1"/>
+
+        <menuitem id="marketing_task_menu" name="Công việc Marketing" parent="quan_ly_cong_viec_root" action="marketing_task_action" sequence="1"/>
+        <menuitem id="ky_thuat_task_menu" name="Công việc Kỹ Thuật" parent="quan_ly_cong_viec_root" action="ky_thuat_task_action" sequence="1"/>
+
+        <!-- Project Menu -->
+        <menuitem id="project_menu" name="Quản lý công việc chung" parent="quan_ly_cong_viec_root" sequence="50"/>
+        <menuitem id="project_task_menu" name="Tất cả công việc" parent="project_menu" sequence="1"/>
+
+    </data>
+</odoo>

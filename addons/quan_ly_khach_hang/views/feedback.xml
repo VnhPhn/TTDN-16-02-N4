@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_feedback_form" model="ir.ui.view">
+            <field name="name">feedback</field>
+            <field name="model">feedback</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_read_only" style="font-size:25px">Phản hồi</div>
+                        <group col="4" string="Thông tin chung">
+                            <field name="feedback_id"/>
+                            <field name="feedback_name"/>
+                            <field name="customer_id"/>
+                            <field name="feedback"/>
+                            <field name="sentiment_label" readonly="1"/>
+                            <field name="sentiment_score" readonly="1"/>
+                            <field name="feedback_date"/>
+                            <field name="rating"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_feedback_tree" model="ir.ui.view">
+            <field name="name">feedback</field>
+            <field name="model">feedback</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="feedback_id"/>
+                    <field name="feedback_name"/>
+                    <field name="feedback"/>
+                    <field name="sentiment_label" readonly="1"/>
+                    <field name="sentiment_score" readonly="1"/>
+                    <field name="feedback_date"/>
+                    <field name="rating"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="feedback_search">
+            <field name="model">feedback</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="feedback_id"/>
+                    <field name="customer_id"/>
+                    <field name="feedback"/>
+                    <field name="feedback_date"/>
+                    <field name="rating"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_feedback" model="ir.actions.act_window">
+            <field name="name">Phản hồi</field>
+            <field name="res_model">feedback</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="feedback_search"/>
+        </record>
+    </data>
+</odoo>

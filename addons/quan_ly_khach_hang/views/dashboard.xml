@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Dashboard / Overview action -->
+        <record id="view_customer_overview_graph" model="ir.ui.view">
+            <field name="name">customer.overview.graph</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <graph string="T?ng quan khách hàng" type="bar">
+                    <field name="customer_status" type="row"/>
+                    <field name="income_level" type="row"/>
+                    <field name="id" type="measure" operator="count"/>
+                    <field name="total_amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_customer_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard Khách hàng</field>
+            <field name="res_model">customer</field>
+            <field name="view_mode">graph,tree,form</field>
+            <field name="views" eval="[(ref('view_customer_overview_graph'), 'graph'), (ref('view_customer_tree'), 'tree'), (ref('view_customer_form'), 'form')]"/>
+            <field name="search_view_id" ref="customer_search"/>
+        </record>
+    </data>
+</odoo>

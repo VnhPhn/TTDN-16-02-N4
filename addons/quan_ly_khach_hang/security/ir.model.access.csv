@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_customer,customer.customer,model_customer,base.group_user,1,1,1,1
+access_crm_lead,crm_lead.crm_lead,model_crm_lead,base.group_user,1,1,1,1
+access_crm_stage,crm_stage.crm_stage,model_crm_stage,base.group_user,1,1,1,1
+access_crm_interact,crm_interact.crm_interact,model_crm_interact,base.group_user,1,1,1,1
+access_contract,contract.contract,model_contract,base.group_user,1,1,1,1
+access_sale_order,sale_order.sale_order,model_sale_order,base.group_user,1,1,1,1
+access_note,note.note,model_note,base.group_user,1,1,1,1
+access_feedback,feedback.feedback,model_feedback,base.group_user,1,1,1,1
+access_marketing_campaign,marketing_campaign.marketing_campaign,model_marketing_campaign,base.group_user,1,1,1,1
+

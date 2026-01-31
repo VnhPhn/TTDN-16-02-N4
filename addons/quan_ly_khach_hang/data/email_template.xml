@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Template email chúc mừng sinh nhật -->
+        <record id="mail_template_customer_birthday" model="mail.template">
+            <field name="name">Chúc mừng sinh nhật khách hàng</field>
+            <field name="model_id" ref="quan_ly_khach_hang.model_customer"/>
+            <field name="subject">Chúc mừng sinh nhật - {{ object.customer_name }}</field>
+            <field name="email_from">${user.email_formatted | safe}</field>
+            <field name="email_to">${object.email | safe}</field>
+            <field name="body_html"><![CDATA[
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Kính gửi <strong>${object.customer_name}</strong>,</p>
+                    <p>Chúng tôi xin gửi lời chúc mừng sinh nhật tốt đẹp nhất đến bạn! 
+                    Chúc bạn một ngày sinh nhật thật vui vẻ, hạnh phúc và thành công.</p>
+                    <p>Cảm ơn bạn đã luôn đồng hành cùng chúng tôi.</p>
+                    <p>Trân trọng,<br/>
+                    Đội ngũ công ty chúng tôi</p>
+                </div>
+            ]]></field>
+        </record>
+        <!-- Thêm vào phần <data noupdate="1"> -->
+        <record id="mail_template_customer_welcome" model="mail.template">
+            <field name="name">Chào mừng khách hàng mới</field>
+            <field name="model_id" ref="quan_ly_khach_hang.model_customer"/>
+            <field name="subject">Chào mừng bạn đến với ${user.company_id.name} - {{ object.customer_name }}</field>
+            <field name="email_from">${user.email_formatted | safe}</field>
+            <field name="email_to">${object.email | safe}</field>
+            <field name="body_html"><![CDATA[
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Kính gửi <strong>${object.customer_name}</strong>,</p>
+                    <p>Chào mừng bạn đến với công ty chúng tôi! 
+                    Chúng tôi rất vui được đồng hành cùng bạn trong hành trình sắp tới.</p>
+                    <p>Nếu bạn có bất kỳ câu hỏi nào, đừng ngần ngại liên hệ với chúng tôi qua email này hoặc số điện thoại 0916684356.</p>
+                    <p>Trân trọng,<br/>
+                    Đội ngũ công ty chúng tôi</p>
+                </div>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

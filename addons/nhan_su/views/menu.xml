@@ -48,5 +48,19 @@
             action="action_hop_dong"
         />
 
+        <menuitem name="Chấm công" 
+            id="menu_cham_cong" 
+            parent="menu_root" 
+            sequence="7"
+            action="action_cham_cong"
+        />
+
+        <menuitem name="Bảng lương" 
+            id="menu_bang_luong" 
+            parent="menu_root" 
+            sequence="8"
+            action="action_bang_luong"
+        />
+
     </data>
 </odoo>
