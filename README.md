@@ -83,7 +83,7 @@ Thay vì sử dụng các tệp Excel rời rạc hay hệ thống thủ công, 
 
 ![Giao diện Nhân sự](./images/nhan_su.png)
 
-![Giao diện Khách hàng](./images/khach_hang.png)
+![Giao diện Khách hàng](./images/bieu_do.png)
 
 ![Giao diện Công việc / Dashboard](./images/cong_viec.png)
 

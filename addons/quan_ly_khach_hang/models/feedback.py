@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.addons.quan_ly_khach_hang.services import ai_client
+from odoo.addons.quan_ly_khach_hang.services import ai_client # type: ignore
 
 class Feedback(models.Model):
     _name = 'feedback'
@@ -47,10 +47,6 @@ class Feedback(models.Model):
             pass
         # Ensure department tasks are created (ky_thuat for low ratings, marketing)
         # Note: CSKH tasks are created inside analyze_sentiment() to avoid duplicates
-        try:
-            self.env['ky_thuat_task'].create_from_feedback(records)
-        except Exception:
-            pass
         return records
 
     def analyze_sentiment(self):
