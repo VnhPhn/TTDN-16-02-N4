@@ -118,7 +118,7 @@ sudo apt install -y python3 python3-pip python3-dev postgresql postgresql-contri
 ```bash
 cd /opt
 sudo git clone https://github.com/VnhPhn/TTDN-16-02-N4
-cd odoo-fitdnu
+cd odoo-fitdnu-B
 ```
 
 **Bước 4**: Tạo virtual environment
