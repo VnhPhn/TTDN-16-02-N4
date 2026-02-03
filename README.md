@@ -102,40 +102,6 @@ Thay vì sử dụng các tệp Excel rời rạc hay hệ thống thủ công, 
 
 ## ⚙️ 6. Cài đặt và Chạy Hệ Thống
 
-
-
-### 6.1. Yêu cầu hệ thống
-
-- **Python 3.10+** 
-- **PostgreSQL 12+**
-- **Docker & Docker Compose** (khuyến nghị)
-- **Git**
-- **Ít nhất 4GB RAM**, 10GB dung lượng ổ cứng
-
-### 6.2. Cài đặt sử dụng Docker (Khuyến nghị)
-
-**Bước 1**: Clone project
-```bash
-git clone https://github.com/VnhPhn/TTDN-16-02-N4
-cd odoo-fitdnu
-```
-
-**Bước 2**: Tạo file environment
-```bash
-cp .env.example .env
-```
-
-**Bước 3**: Khởi động hệ thống với Docker Compose
-```bash
-docker-compose up -d
-```
-
-**Bước 4**: Truy cập Odoo
-- Mở trình duyệt: `http://localhost:8069`
-
-
-### 6.3. Cài đặt trên máy chủ Linux (Ubuntu/Debian)
-
 **Bước 1**: Cập nhật hệ thống
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -194,38 +160,6 @@ python3 odoo-bin.py -c odoo.conf
 - Mở trình duyệt: `http://localhost:8069`
 - Tài khoản mặc định: `admin` / `admin`
 
-### 6.4. Cài đặt trên Windows
-
-**Bước 1**: Cài đặt Python 3.10+
-- Tải từ https://www.python.org/downloads/
-- Chọn "Add Python to PATH"
-
-**Bước 2**: Cài đặt PostgreSQL
-- Tải từ https://www.postgresql.org/download/windows/
-- Ghi nhớ username và mật khẩu
-
-**Bước 3**: Clone project
-```bash
-git clone https://github.com/VnhPhn/TTDN-16-02-N4
-cd odoo-fitdnu
-```
-
-**Bước 4**: Tạo virtual environment
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
-
-**Bước 5**: Cài đặt dependencies
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-**Bước 6**: Chạy Odoo
-```bash
-python odoo-bin.py -c odoo.conf
-```
 ## 📞 7. Support & Liên Hệ
 
 - 📧 Email: [vinh036648@gmail.com]
