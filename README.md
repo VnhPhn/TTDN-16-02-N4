@@ -34,8 +34,8 @@ Thay vì sử dụng các tệp Excel rời rạc hay hệ thống thủ công, 
 
 ![Poster hệ thống](./images/poster.jpg)
 
-<p>
-<a href="./images/poster.pdf">Tải poster (PDF)</a>
+<p> 
+<a href="./images/poster.pdf">Nhấn vô đây để xem chi tiết Poster (PDF)</a>
 </p>
 
 </div>
