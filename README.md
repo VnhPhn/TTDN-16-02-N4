@@ -29,7 +29,14 @@ Hệ thống Quản lý Nhân Sự, Công Việc và Khách Hàng được xây 
 
 Thay vì sử dụng các tệp Excel rời rạc hay hệ thống thủ công, giải pháp này mang lại một nền tảng tập trung, hiện đại, tự động hóa và dễ sử dụng cho toàn bộ quy trình quản lý doanh nghiệp.
 
-## 🔧 2. Các công nghệ được sử dụng
+## 🖼️ 2. Poster
+<div align="center">
+
+![Poster hệ thống](./images/poster.jpg)
+
+</div>
+
+## 🔧 3. Các công nghệ được sử dụng
 <div align="center">
 
 ### Nền Tảng Chính
@@ -56,7 +63,7 @@ Thay vì sử dụng các tệp Excel rời rạc hay hệ thống thủ công, 
 [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/)
 </div>
 
-## 🚀 3. Các tính năng chính
+## 🚀 4. Các tính năng chính
 
 ### ✨ Quản lý Nhân Sự (HR Module)
 - 👥 Quản lý thông tin nhân viên chi tiết (thông tin cá nhân, liên lạc, hợp đồng)
@@ -78,7 +85,7 @@ Thay vì sử dụng các tệp Excel rời rạc hay hệ thống thủ công, 
 - ✉️ Quản lý email, cuộc gọi, cuộc họp và sự kiện khách hàng
 - 🗂️ Quản lý hoạt động, nhiệm vụ liên quan đến khách hàng
 
-## 🖼️ 4. Giao diện chính
+## 🖼️ 5. Giao diện chính
 <div align="center">
 
 ![Giao diện Nhân sự](./images/nhan_su.png)
@@ -89,11 +96,11 @@ Thay vì sử dụng các tệp Excel rời rạc hay hệ thống thủ công, 
 
 </div>
 
-## ⚙️ 5. Cài đặt và Chạy Hệ Thống
+## ⚙️ 6. Cài đặt và Chạy Hệ Thống
 
 
 
-### 5.1. Yêu cầu hệ thống
+### 6.1. Yêu cầu hệ thống
 
 - **Python 3.10+** 
 - **PostgreSQL 12+**
@@ -101,7 +108,7 @@ Thay vì sử dụng các tệp Excel rời rạc hay hệ thống thủ công, 
 - **Git**
 - **Ít nhất 4GB RAM**, 10GB dung lượng ổ cứng
 
-### 5.2. Cài đặt sử dụng Docker (Khuyến nghị)
+### 6.2. Cài đặt sử dụng Docker (Khuyến nghị)
 
 **Bước 1**: Clone project
 ```bash
@@ -123,7 +130,7 @@ docker-compose up -d
 - Mở trình duyệt: `http://localhost:8069`
 
 
-### 5.3. Cài đặt trên máy chủ Linux (Ubuntu/Debian)
+### 6.3. Cài đặt trên máy chủ Linux (Ubuntu/Debian)
 
 **Bước 1**: Cập nhật hệ thống
 ```bash
@@ -183,7 +190,7 @@ python3 odoo-bin.py -c odoo.conf
 - Mở trình duyệt: `http://localhost:8069`
 - Tài khoản mặc định: `admin` / `admin`
 
-### 5.4. Cài đặt trên Windows
+### 6.4. Cài đặt trên Windows
 
 **Bước 1**: Cài đặt Python 3.10+
 - Tải từ https://www.python.org/downloads/
@@ -215,7 +222,7 @@ pip install -r requirements.txt
 ```bash
 python odoo-bin.py -c odoo.conf
 ```
-## 📞 6. Support & Liên Hệ
+## 📞 7. Support & Liên Hệ
 
 - 📧 Email: [vinh036648@gmail.com]
 - 🌐 Website: [https://dainam.edu.vn]
